@@ -1,5 +1,4 @@
 @startuml
-
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
@@ -355,19 +354,6 @@ Container_Boundary(organization_baundary, "Organization", "SAP SD", "Sales and D
     Rel_L(shipping_point_1, storage_location_1, "")
     Rel_R(shipping_point_2, storage_location_2, "")
     
-
-      
-
 }
-
-
-
-
-'Rel(bp1, shipping_condition_1, "")
-'Rel(bp2, shipping_condition_2, "")
-
-
-
-
 
 @enduml
