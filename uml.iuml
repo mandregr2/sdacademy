@@ -1,0 +1,373 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+
+
+HIDE_STEREOTYPE()
+
+
+!$COLOR_A_5 = "#7f3b08"
+!$COLOR_A_4 = "#b35806"
+!$COLOR_A_3 = "#e08214"
+!$COLOR_A_2 = "#fdb863"
+!$COLOR_A_1 = "#fee0b6"
+!$COLOR_NEUTRAL = "#f7f7f7"
+!$COLOR_B_1 = "#d8daeb"
+!$COLOR_B_2 = "#b2abd2"
+!$COLOR_B_3 = "#8073ac"
+!$COLOR_B_4 = "#542788"
+!$COLOR_B_5 = "#2d004b"
+!$COLOR_REL_LINE = "#8073ac"
+!$COLOR_REL_TEXT = "#8073ac"
+
+UpdateElementStyle("Container", $bgColor=$COLOR_A_5, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_A_1, $shadowing="true", $legendText="Internal user")
+
+
+'preencher somente com os códigos que serão utilizados
+
+!define ORGANIZATION Organization
+!define COMPANY_CODE 1010
+
+'preencher com os dados da sales organization
+!define SALES_ORGANIZATION_CODE_1 CD Stutgard
+!define SALES_ORGANIZATION_CODE_2 CD Berlin
+
+'define com true ou false as ligações entre os elementos
+!define SO1_BELONGS_TO_ORGANIZATION true
+!define SO2_BELONGS_TO_ORGANIZATION true
+
+'defina os dados do distribution channel
+!define DISTRIBUTION_CHANNEL_CODE_1 Telemarketing
+!define DISTRIBUTION_CHANNEL_CODE_2 Telemarketing
+!define DISTRIBUTION_CHANNEL_CODE_3 
+!define DISTRIBUTION_CHANNEL_CODE_4 
+
+'define com true ou false as ligações entre os elementos
+!define DC1_BELONGS_TO_SO1 true
+!define DC2_BELONGS_TO_SO1 false
+!define DC3_BELONGS_TO_SO1 false
+!define DC1_BELONGS_TO_SO2 false
+!define DC2_BELONGS_TO_SO2 true
+!define DC3_BELONGS_TO_SO2 false
+
+'defina os dados do division
+!define DIVISION_CODE_1 Notebook
+!define DIVISION_CODE_2 Acessório
+!define DIVISION_CODE_3 Comum
+!define DIVISION_CODE_4 Notebook
+!define DIVISION_CODE_5 Acessórios
+!define DIVISION_CODE_6 Comum
+
+'define com true ou false as ligações entre os elementos
+!define DV1_BELONGS_TO_DC1 true
+!define DV2_BELONGS_TO_DC1 true
+!define DV3_BELONGS_TO_DC1 true
+!define DV4_BELONGS_TO_DC1 true
+!define DV4_BELONGS_TO_DC1 true
+
+!define DV1_BELONGS_TO_DC2 true
+!define DV2_BELONGS_TO_DC2 true
+!define DV3_BELONGS_TO_DC2 true
+!define DV4_BELONGS_TO_DC3 true
+!define DV1_BELONGS_TO_DC3 false
+!define DV2_BELONGS_TO_DC3 false
+!define DV3_BELONGS_TO_DC3 false
+
+'defina os dados do sales office
+!define SALES_OFFICE_CODE_1 Norte
+!define SALES_OFFICE_CODE_2 Sul
+
+'defina com true ou false as ligações entre os elementos
+!define SLOFF1_BELONGS_TO_SO1 false
+!define SLOFF2_BELONGS_TO_SO1 false
+!define SLOFF1_BELONGS_TO_SO2 false
+!define SLOFF2_BELONGS_TO_SO2 false
+
+'defina os dados do plant
+!define PLANT_CODE_1 Stutgard
+!define PLANT_CODE_2 Berlin
+!define PLANT_CODE_3 
+
+'define com true ou false as ligações entre os elementos
+!define DV1_USES_PLANT1 false
+!define DV2_USES_PLANT1 false
+!define DV3_USES_PLANT1 false
+!define DV1_USES_PLANT2 false
+!define DV2_USES_PLANT2 false
+!define DV3_USES_PLANT2 false
+!define DV1_USES_PLANT3 false
+!define DV2_USES_PLANT3 false
+!define DV3_USES_PLANT3 false
+
+
+!define SHIPPING_POINT_CODE_1 Shipping Point Berlin G2
+!define SHIPPING_POINT_CODE_2 Shipping Point Stutgard G2
+
+!define SHIPPING_CONDITION_CODE_1 Rápido
+!define SHIPPING_CONDITION_CODE_2 Normal
+!define SHIPPING_CONDITION_CODE_3 Rápido
+!define SHIPPING_CONDITION_CODE_4 Normal
+
+
+!define LOADING_GROUP_CODE_1 Empilhadeira
+!define LOADING_GROUP_CODE_2 Manual
+!define LOADING_GROUP_CODE_3 Empilhadeira
+!define LOADING_GROUP_CODE_4 Manual
+
+!define SALES_GROUP_CODE_1 Sul
+!define SALES_GROUP_CODE_2 Norte
+
+
+
+
+
+Container_Boundary(organization_baundary, "Organization", "SAP SD", "Sales and Distribution"){
+
+    'COMPANY
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "1010")
+    AddProperty("Nome", "Best Company Computer and Acessory")
+    Container(organization_1, ORGANIZATION)
+       
+    'SALES ORGANIZATION   
+    SetPropertyHeader("Atributo","Valor")    
+    AddProperty("Código", "ZG2S")
+    AddProperty("Nome", "CD Stutgard")
+    Container(sales_organization_1, SALES_ORGANIZATION_CODE_1,  "Sales Organization")
+
+    'SALES ORGANIZATION
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "ZG2N")
+    AddProperty("Nome", "CD Berlin")
+    Container(sales_organization_2, SALES_ORGANIZATION_CODE_2, "Sales Organization")
+
+            'RELATIONSHIP COMPANY TO SALES ORGANIZATION
+            Rel(organization_1, sales_organization_1, "") 
+            Rel(organization_1, sales_organization_2, "")
+                
+
+    'PLANT
+    AddProperty("Código", "1010")
+    AddProperty("Nome", "Stutgard")
+    Container(plant_1, PLANT_CODE_1, "Plant")
+    
+    AddProperty("Código", "1020")
+    AddProperty("Nome", "Berlin")
+    Container(plant_2, PLANT_CODE_2, "Plant")
+
+    'DISTRIBUTION CHANNELS
+    SetPropertyHeader("Atributo","Valor")    
+    AddProperty("Código", "Z2")
+    AddProperty("Nome", "Telemarketing")
+    Container(distribution_channel_1, DISTRIBUTION_CHANNEL_CODE_1, "Distribution Channel")
+
+    SetPropertyHeader("Atributo","Valor")    
+    AddProperty("Código", "Z2")
+    AddProperty("Nome", "Telemarketing")
+    Container(distribution_channel_2, DISTRIBUTION_CHANNEL_CODE_2, "Distribution Channel")
+   
+
+            'RELATIONSHIP SALES ORGANIZATION TO DISTRIBUTION CHANNEL
+            Rel_Down(sales_organization_1, distribution_channel_1, "")
+            Rel_Down(sales_organization_2, distribution_channel_2, "")
+
+            'RELATIONSHIP SALES ORGANIZATION TO PLANT
+            Lay_Distance(sales_organization_1, plant_1, 3)
+            Rel(sales_organization_1, plant_1, "")
+            Lay_Distance(sales_organization_2, plant_2, 3)
+            Rel_D(sales_organization_2, plant_2, "")
+
+    'DIVISIONS
+    AddProperty("Código", "2N")    
+    AddProperty("Nome", "Notebooks")
+    Container(division_1_1, DIVISION_CODE_1, "Division")
+    AddProperty("Código", "2A")
+    AddProperty("Nome", "Acessórios")
+    Container(division_1_2, DIVISION_CODE_2, "Division")
+    AddProperty("Código", "2C")
+    AddProperty("Nome", "Comum")
+    Container(division_1_3, DIVISION_CODE_3, "Division")
+    AddProperty("Código", "2N")
+    AddProperty("Nome", "Notebooks")
+    Container(division_2_1, DIVISION_CODE_4, "Division")
+    AddProperty("Código", "2A")
+    AddProperty("Nome", "Acessórios")
+    Container(division_2_2, DIVISION_CODE_5, "Division")
+    AddProperty("Código", "2C")
+    AddProperty("Nome", "Comum")
+    Container(division_2_3, DIVISION_CODE_6, "Division") 
+
+            'RELATIONSHIP DISTRIBUTION CHANNEL TO DIVISION
+            Rel(distribution_channel_1, division_1_1, "")
+            Rel(distribution_channel_1, division_1_2, "")
+            Rel(distribution_channel_1, division_1_3, "")
+            Rel(distribution_channel_2, division_2_1, "")
+            Rel(distribution_channel_2, division_2_2, "")
+            Rel(distribution_channel_2, division_2_3, "") 
+
+    'SHIPPING POINTS
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "ZG2N")
+    AddProperty("Nome", "Shipping Point Berlin G2")
+    Container(shipping_point_1, SHIPPING_POINT_CODE_1, "Shipping Point")
+    AddProperty("Código", "ZG2S")
+    AddProperty("Nome", "Shipping Point Stutgard G2")
+    Container(shipping_point_2, SHIPPING_POINT_CODE_2, "Shipping Point")
+
+    'RELATIONSHIP PLANT TO SHIPPING POINT
+            Rel(plant_2, shipping_point_1, "")
+            Rel(plant_1, shipping_point_2, "")
+      
+    'SALES OFFICES
+    SetPropertyHeader("Atributo","Valor")        
+    AddProperty("Código", "ZG2S")
+    AddProperty("Nome", "Sul")
+    Container(sales_office_1, "Sul", "Sales Office")
+    AddProperty("Código", "ZG2N")
+    AddProperty("Nome", "Norte")
+    Container(sales_office_2, "Norte", "Sales Office")
+
+        'RELATIONSHIP SALES ORGANIZATION TO SALES OFFICE
+        Rel_R(sales_organization_1, sales_office_1, "")
+        Rel_R(sales_organization_2, sales_office_2, "")
+
+    
+    'SALES GROUPS
+    AddProperty("Código", "G2S")
+    AddProperty("Nome", "Sul")
+    Container(sales_group_1, "Sul", "Sales Group")
+    
+    AddProperty("Código", "G2N")
+    AddProperty("Nome", "Norte")
+    Container(sales_group_2, "Norte", "Sales Group")
+
+
+    Rel_R(sales_office_1, sales_group_1, "")
+    Rel_R(sales_office_2, sales_group_2, "")
+    
+       
+    'SHIPPING CONDITIONS
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "2R")
+    AddProperty("Nome", "Rápido G2")  
+    Container(shipping_condition_1, SHIPPING_CONDITION_CODE_1, "Shipping Condition")
+    AddProperty("Código", "2N")
+    AddProperty("Nome", "Normal G2")
+    Container(shipping_condition_2, SHIPPING_CONDITION_CODE_2, "Shipping Condition")
+    AddProperty("Código", "2R")
+    AddProperty("Nome", "Rápido G2")  
+    Container(shipping_condition_3, SHIPPING_CONDITION_CODE_3, "Shipping Condition")
+    AddProperty("Código", "2N")
+    AddProperty("Nome", "Normal G2")
+    Container(shipping_condition_4, SHIPPING_CONDITION_CODE_4, "Shipping Condition")
+    
+    'LOADING GROUPS
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "0002")
+    AddProperty("Nome", "Empilhadeira G2")
+    Container(loading_group_1, LOADING_GROUP_CODE_1, "Loading Group")
+    AddProperty("Código", "0003")
+    AddProperty("Nome", "Manual G2")
+    Container(loading_group_2, LOADING_GROUP_CODE_2, "Loading Group")
+    AddProperty("Código", "0002")
+    AddProperty("Nome", "Empilhadeira G2")
+    Container(loading_group_3, LOADING_GROUP_CODE_1, "Loading Group")
+    AddProperty("Código", "0003")
+    AddProperty("Nome", "Manual G2")
+    Container(loading_group_4, LOADING_GROUP_CODE_2, "Loading Group")
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "0002")
+    AddProperty("Nome", "Empilhadeira G2")
+    Container(loading_group_5, LOADING_GROUP_CODE_1, "Loading Group")
+    AddProperty("Código", "0003")
+    AddProperty("Nome", "Manual G2")
+    Container(loading_group_6, LOADING_GROUP_CODE_2, "Loading Group")
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "0002")
+    AddProperty("Nome", "Empilhadeira G2")
+    Container(loading_group_7, LOADING_GROUP_CODE_1, "Loading Group")
+    AddProperty("Código", "0003")
+    AddProperty("Nome", "Manual G2")
+    Container(loading_group_8, LOADING_GROUP_CODE_2, "Loading Group")
+    
+
+    Rel(shipping_condition_1, loading_group_1, "")
+    Rel(shipping_condition_1, loading_group_2, "")
+    Rel(shipping_condition_2, loading_group_3, "")
+    Rel(shipping_condition_2, loading_group_4, "")
+    Rel(shipping_condition_3, loading_group_5, "")
+    Rel(shipping_condition_3, loading_group_6, "")
+    Rel(shipping_condition_4, loading_group_7, "")
+    Rel(shipping_condition_4, loading_group_8, "")
+
+    'TRANSPORTATION GROUPS
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "0001")
+    AddProperty("Nome", "Pallet")
+    Container(transportation_group_1, "0001", "Pallet")
+    AddProperty("Código", "0001")
+    AddProperty("Nome", "Pallet")
+    Container(transportation_group_2, "0001", "Pallet")
+
+    'ROUTES
+    SetPropertyHeader("Atributo","Valor 1", "Valor 2")
+    AddProperty("Código", "GR0200")
+    AddProperty("Nome", "Berlin G2")
+    AddProperty("Departure Zone", "D000010000", "D000010000")
+    AddProperty("Shipping Condition", "[2R] Rápido G2", "[2N] Normal G2")
+    AddProperty("Tansportation Group", "0001", "0001")
+    Container(route_1, "Rota", "Route")
+
+    SetPropertyHeader("Atributo","Valor 1", "Valor 2")
+    AddProperty("Código", "GR0201")
+    AddProperty("Nome", "Stuttgart G2")
+    AddProperty("Departure Zone", "D000070000", "D000070000")
+    AddProperty("Shipping Condition", "[2R] Rápido G2", "[2N] Normal G2")
+    AddProperty("Tansportation Group", "0001", "0001")
+    Container(route_2, "Rota", "Route")
+
+    Rel(route_2, transportation_group_1, "")
+    Rel(route_1, transportation_group_2, "")
+    Rel(transportation_group_1, shipping_condition_1, "")
+    Rel(transportation_group_1, shipping_condition_2, "")
+    Rel(transportation_group_2, shipping_condition_3, "")
+    Rel(transportation_group_2, shipping_condition_4, "")
+
+    Rel(shipping_point_1, route_1, "")
+    Rel(shipping_point_2, route_2, "")
+    
+
+    'STORAGE LOCATIONS
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "101A")
+    Container(storage_location_1, "101A", "Storage Location")
+
+    'STORAGE LOCATIONS
+    SetPropertyHeader("Atributo","Valor")
+    AddProperty("Código", "101A")
+    Container(storage_location_2, "101A", "Storage Location")
+
+   
+    Rel_L(shipping_point_1, storage_location_1, "")
+    Rel_R(shipping_point_2, storage_location_2, "")
+    
+
+      
+
+}
+
+
+
+
+'Rel(bp1, shipping_condition_1, "")
+'Rel(bp2, shipping_condition_2, "")
+
+
+
+
+
+@enduml
